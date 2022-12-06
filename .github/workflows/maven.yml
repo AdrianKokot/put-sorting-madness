@@ -1,4 +1,4 @@
-name: Build project
+name: 🏗️ Maven
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    name: Validate, build and run tests
+    name: 🏋️ Validate, build and run tests
     runs-on: ubuntu-latest
 
     steps:

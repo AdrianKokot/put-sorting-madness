@@ -1,4 +1,4 @@
-name: Javadoc
+name: 📃 Documentation
 
 on:
   push:
@@ -19,6 +19,7 @@ concurrency:
 
 jobs:
   build:
+    name: 🏗️ Build Javadoc
     runs-on: ubuntu-latest
 
     steps:
@@ -40,6 +41,7 @@ jobs:
         path: 'target/site/apidocs'
 
   deploy:
+    name: 🚀 Deploy documentation
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
