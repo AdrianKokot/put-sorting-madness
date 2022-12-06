@@ -3,6 +3,8 @@ name: 📃 Documentation
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 permissions:
@@ -41,7 +43,7 @@ jobs:
   deploy:
     name: 🚀 Deploy documentation
     environment:
-      name: github-pages
+      name: Documentation
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
