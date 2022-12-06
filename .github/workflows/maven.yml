@@ -1,4 +1,4 @@
-name: Maven CI
+name: Build project
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    name: Build and test
+    name: Validate, build and run tests
     runs-on: ubuntu-latest
 
     steps:
@@ -19,5 +19,5 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-    - name: Build and test
-      run: mvn package --batch-mode
+    - name: Run maven
+      run: mvn verify --batch-mode --update-snapshots
