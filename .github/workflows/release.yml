@@ -28,5 +28,5 @@ jobs:
       run: mvn package --batch-mode --update-snapshots
     - uses: ncipollo/release-action@v1
       with:
-        artifacts: "taerget/*.jar"
+        artifacts: "target/*.jar"
         body: "# Release ${{ steps.vars.outputs.tag }}"
