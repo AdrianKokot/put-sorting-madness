@@ -12,5 +12,5 @@ public abstract class Sort {
         a[i] = a[j];
         a[j] = tmp;
     }
-    public abstract <T extends Comparable<? super T>> List<T> sort(List<T> a);
+    public abstract <T extends Comparable<? super T>> void sort(List<T> a);
 }
