@@ -19,7 +19,7 @@ public class SortRunnerImpl implements ISortRunner {
     sorter.sort(data);
     Instant end = Instant.now();
 
-    return new SortResult<T>(algorithm, Duration.between(start, end).toMillis(), data);
+    return new SortResult<T>(algorithm, Duration.between(start, end).getNano()/1000000.0, data);
   }
 
 }

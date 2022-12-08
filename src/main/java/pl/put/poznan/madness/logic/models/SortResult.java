@@ -4,12 +4,12 @@ import pl.put.poznan.madness.logic.SortingAlgorithm;
 
 public class SortResult<T> {
   public T[] result;
-  public long elapsedMilliseconds;
-  public SortingAlgorithm usedAlgorithm;
+  public double elapsedMilliseconds;
+  public SortingAlgorithm algorithm;
 
-  public SortResult(SortingAlgorithm alg, long time, T[] result) {
-    this.usedAlgorithm = alg;
-    this.elapsedMilliseconds = time;
+  public SortResult(SortingAlgorithm algorithm, double elapsedMilliseconds, T[] result) {
+    this.algorithm = algorithm;
+    this.elapsedMilliseconds = elapsedMilliseconds;
     this.result = result;
   }
 }
