@@ -1,5 +1,9 @@
 package pl.put.poznan.madness.rest;
 
+import java.text.CollationElementIterator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -12,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
-import pl.put.poznan.madness.logic.models.SortResult;
+import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
 import pl.put.poznan.madness.rest.exceptions.InvalidSortInputException;
 import pl.put.poznan.madness.rest.models.SortableItem;
 import pl.put.poznan.madness.rest.models.SortingInput;
@@ -26,13 +30,16 @@ public class SortingMadnessController {
   private ISortRunner runner;
 
   @RequestMapping(path = "/sort", method = RequestMethod.POST, produces = "application/json")
-  public SortResult<SortableItem> post(@RequestBody() SortingInput input) {
+  public SortBenchmarkResult<SortableItem> post(@RequestBody() SortingInput input) {
     try {
-      SortableItem[] data = input.getSortableItems();
+      List<SortableItem> data = input.getSortableItems();
 
-      logger.debug(String.format("[%s] %s:\n\t\t\t%s", RequestMethod.POST, "/api/sort", input.toString()));
+      logger.debug(String.format("[%s] %s\n\t\t\tSort data: '%s'", RequestMethod.POST, "/api/sort", data));
 
-      return runner.runSort(input.algorithm, data);
+      return runner.runBenchmark(
+          input.algorithms.stream().distinct().collect(Collectors.toList()),
+          data.stream().toArray(SortableItem[]::new));
+
     } catch (InvalidSortInputException e) {
       throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
     }

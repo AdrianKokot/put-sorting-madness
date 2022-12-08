@@ -12,14 +12,8 @@ import pl.put.poznan.madness.rest.exceptions.NotAllCustomObjectHaveSortablePrope
 
 public class SortingInput {
   public List<Object> data;
-  public SortingAlgorithm algorithm = SortingAlgorithm.Bubble;
+  public List<SortingAlgorithm> algorithms = List.of(SortingAlgorithm.Bubble);
   public String property = "";
-
-  @Override
-  public String toString() {
-    return String.format("SortingInput '%s' with '%s' algorithm %s", data.toString(), algorithm,
-        property.isEmpty() ? "" : String.format("on '%s' property", property));
-  }
 
   private boolean isPrimitiveDataInput() throws InvalidSortInputException {
     if (data.stream().anyMatch(Map.class::isInstance)) {
@@ -42,7 +36,7 @@ public class SortingInput {
     return true;
   }
 
-  public SortableItem[] getSortableItems() throws InvalidSortInputException {
+  public List<SortableItem> getSortableItems() throws InvalidSortInputException {
     Stream<SortableItem> stream;
 
     if (isPrimitiveDataInput()) {
@@ -55,7 +49,6 @@ public class SortingInput {
     }
 
     return stream
-        .collect(Collectors.toList())
-        .toArray(SortableItem[]::new);
+        .collect(Collectors.toList());
   }
 }

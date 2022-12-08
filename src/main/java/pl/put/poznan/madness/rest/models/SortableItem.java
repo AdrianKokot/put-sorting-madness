@@ -18,4 +18,9 @@ public class SortableItem implements Comparable<SortableItem> {
 
   public Object resultObject;
   public String orderableItem;
+
+  @Override
+  public String toString() {
+    return resultObject.toString();
+  }
 }
