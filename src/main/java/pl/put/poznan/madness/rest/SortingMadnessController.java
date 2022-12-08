@@ -27,15 +27,14 @@ public class SortingMadnessController {
   public <T> List<Object> post(@RequestBody() SortingInput<T> input) {
     List<SortableItem<Object, String>> data;
 
-    logger.debug(String.format("[%s] %s:\n\t\t\t%s", RequestMethod.POST, "/api/sort", input.toString()));
-
     if (input.data.stream().anyMatch(Map.class::isInstance)) {
       if (input.property == null) {
         throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
             "When sorting custom object 'property' is required.");
       }
 
-      if (input.data.stream().map(x -> (Map) x).anyMatch(x -> !x.containsKey(input.property))) {
+      if (input.data.stream().anyMatch(x -> !(x instanceof Map))
+          || input.data.stream().map(x -> (Map) x).anyMatch(x -> !x.containsKey(input.property))) {
         throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
             "All object in 'data' must have the same 'property' to be sorted on.");
       }
@@ -49,6 +48,8 @@ public class SortingMadnessController {
           .map(x -> new SortableItem<Object, String>(x, x.toString()))
           .collect(Collectors.toList());
     }
+
+    logger.debug(String.format("[%s] %s:\n\t\t\t%s", RequestMethod.POST, "/api/sort", input.toString()));
 
     Sort sorter = new JavaSort();
     sorter.sort(data);
