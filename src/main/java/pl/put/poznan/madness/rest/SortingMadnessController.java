@@ -1,8 +1,5 @@
 package pl.put.poznan.madness.rest;
 
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -16,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
 import pl.put.poznan.madness.logic.models.SortResult;
+import pl.put.poznan.madness.rest.exceptions.InvalidSortInputException;
 import pl.put.poznan.madness.rest.models.SortableItem;
 import pl.put.poznan.madness.rest.models.SortingInput;
 
@@ -29,34 +27,14 @@ public class SortingMadnessController {
 
   @RequestMapping(path = "/sort", method = RequestMethod.POST, produces = "application/json")
   public SortResult<SortableItem> post(@RequestBody() SortingInput input) {
-    SortableItem[] data;
+    try {
+      SortableItem[] data = input.getSortableItems();
 
-    if (input.data.stream().anyMatch(Map.class::isInstance)) {
-      if (input.property == null) {
-        throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-            "When sorting custom object 'property' is required.");
-      }
+      logger.debug(String.format("[%s] %s:\n\t\t\t%s", RequestMethod.POST, "/api/sort", input.toString()));
 
-      if (input.data.stream().anyMatch(x -> !(x instanceof Map))
-          || input.data.stream().map(x -> (Map) x).anyMatch(x -> !x.containsKey(input.property))) {
-        throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY,
-            "All object in 'data' must have the same 'property' to be sorted on.");
-      }
-
-      data = input.data.stream().map(x -> (Map) x)
-          .map(x -> new SortableItem(x, x.get(input.property).toString()))
-          .collect(Collectors.toList())
-          .toArray(SortableItem[]::new);
-
-    } else {
-      data = input.data.stream()
-          .map(x -> new SortableItem(x, x.toString()))
-          .collect(Collectors.toList())
-          .toArray(SortableItem[]::new);
+      return runner.runSort(input.algorithm, data);
+    } catch (InvalidSortInputException e) {
+      throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
     }
-
-    logger.debug(String.format("[%s] %s:\n\t\t\t%s", RequestMethod.POST, "/api/sort", input.toString()));
-
-    return runner.runSort(input.algorithm, data);
   }
 }
