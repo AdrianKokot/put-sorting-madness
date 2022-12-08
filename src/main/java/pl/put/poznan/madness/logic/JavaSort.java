@@ -1,10 +1,9 @@
 package pl.put.poznan.madness.logic;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
 public class JavaSort extends Sort {
-  public <T extends Comparable<? super T>> void sort(List<T> a) {
-    Collections.sort(a);
+  public <T extends Comparable<? super T>> void sort(T[] a) {
+    Arrays.sort(a);
   };
 }

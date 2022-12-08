@@ -4,8 +4,8 @@ import java.util.List;
 
 import pl.put.poznan.madness.logic.SortingAlgorithm;
 
-public class SortingInput<T> {
-  public List<T> data;
+public class SortingInput {
+  public List<Object> data;
   public SortingAlgorithm algorithm = SortingAlgorithm.Bubble;
   public String property = "";
 

@@ -1,8 +1,10 @@
 package pl.put.poznan.madness.rest;
 
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +26,8 @@ public class SortingMadnessController {
   private static final Logger logger = LoggerFactory.getLogger(SortingMadnessController.class);
 
   @RequestMapping(path = "/sort", method = RequestMethod.POST, produces = "application/json")
-  public <T> List<Object> post(@RequestBody() SortingInput<T> input) {
-    List<SortableItem<Object, String>> data;
+  public Stream<Object> post(@RequestBody() SortingInput input) {
+    SortableItem[] data = new SortableItem[input.data.size()];
 
     if (input.data.stream().anyMatch(Map.class::isInstance)) {
       if (input.property == null) {
@@ -40,19 +42,21 @@ public class SortingMadnessController {
       }
 
       data = input.data.stream().map(x -> (Map) x)
-          .map(x -> new SortableItem<Object, String>(x, x.get(input.property).toString()))
-          .collect(Collectors.toList());
+          .map(x -> new SortableItem(x, x.get(input.property).toString()))
+          .collect(Collectors.toList())
+          .toArray(SortableItem[]::new);
 
     } else {
       data = input.data.stream()
-          .map(x -> new SortableItem<Object, String>(x, x.toString()))
-          .collect(Collectors.toList());
+          .map(x -> new SortableItem(x, x.toString()))
+          .collect(Collectors.toList())
+          .toArray(SortableItem[]::new);
     }
 
     logger.debug(String.format("[%s] %s:\n\t\t\t%s", RequestMethod.POST, "/api/sort", input.toString()));
 
     Sort sorter = new JavaSort();
     sorter.sort(data);
-    return data.stream().map(x -> x.resultObject).collect(Collectors.toList());
+    return Stream.of(data).map(x -> x.resultObject);
   }
 }
