@@ -2,7 +2,6 @@ package pl.put.poznan.madness.rest;
 
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Resource;
 
@@ -15,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import pl.put.poznan.madness.rest.interfaces.ISortRunner;
+import pl.put.poznan.madness.logic.interfaces.ISortRunner;
+import pl.put.poznan.madness.logic.models.SortResult;
 import pl.put.poznan.madness.rest.models.SortableItem;
 import pl.put.poznan.madness.rest.models.SortingInput;
 
@@ -28,7 +28,7 @@ public class SortingMadnessController {
   private ISortRunner runner;
 
   @RequestMapping(path = "/sort", method = RequestMethod.POST, produces = "application/json")
-  public Stream<Object> post(@RequestBody() SortingInput input) {
+  public SortResult<SortableItem> post(@RequestBody() SortingInput input) {
     SortableItem[] data;
 
     if (input.data.stream().anyMatch(Map.class::isInstance)) {
@@ -57,8 +57,6 @@ public class SortingMadnessController {
 
     logger.debug(String.format("[%s] %s:\n\t\t\t%s", RequestMethod.POST, "/api/sort", input.toString()));
 
-    data = runner.run(input.algorithm, data);
-
-    return Stream.of(data).map(x -> x.resultObject);
+    return runner.runSort(input.algorithm, data);
   }
 }

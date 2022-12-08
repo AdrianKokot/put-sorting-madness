@@ -1,18 +1,25 @@
 package pl.put.poznan.madness.logic;
 
+import java.time.Instant;
+import java.time.Duration;
+
 import org.springframework.stereotype.Component;
 
-import pl.put.poznan.madness.rest.interfaces.ISortRunner;
-import pl.put.poznan.madness.rest.models.SortableItem;
+import pl.put.poznan.madness.logic.interfaces.ISortRunner;
+import pl.put.poznan.madness.logic.models.SortResult;
 
 @Component
 public class SortRunnerImpl implements ISortRunner {
 
   @Override
-  public SortableItem[] run(SortingAlgorithm algorithm, SortableItem[] data) {
+  public <T extends Comparable<T>> SortResult<T> runSort(SortingAlgorithm algorithm, T[] data) {
     Sort sorter = new JavaSort();
+
+    Instant start = Instant.now();
     sorter.sort(data);
-    return data;
+    Instant end = Instant.now();
+
+    return new SortResult<T>(algorithm, Duration.between(start, end).toMillis(), data);
   }
 
 }
