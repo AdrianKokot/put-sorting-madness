@@ -1,9 +1,5 @@
 package pl.put.poznan.madness.rest;
 
-import java.text.CollationElementIterator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -16,10 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
-import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
-import pl.put.poznan.madness.rest.exceptions.InvalidSortInputException;
-import pl.put.poznan.madness.rest.models.SortableItem;
-import pl.put.poznan.madness.rest.models.SortingInput;
+import pl.put.poznan.madness.rest.models.ISortableItem;
+import pl.put.poznan.madness.rest.models.SortDto;
+import pl.put.poznan.madness.rest.utils.SortDtoParser;
 
 @RestController
 @RequestMapping("/api")
@@ -30,18 +25,17 @@ public class SortingMadnessController {
   private ISortRunner runner;
 
   @RequestMapping(path = "/sort", method = RequestMethod.POST, produces = "application/json")
-  public SortBenchmarkResult<SortableItem> post(@RequestBody() SortingInput input) {
-    try {
-      List<SortableItem> data = input.getSortableItems();
+  public Object post(@RequestBody() SortDto sortInput) {
 
-      logger.debug(String.format("[%s] %s\n\t\t\tSort data: '%s'", RequestMethod.POST, "/api/sort", data));
+    SortDtoParser validator = SortDtoParser.parse(sortInput);
 
-      return runner.runBenchmark(
-          input.algorithms.stream().distinct().collect(Collectors.toList()),
-          data.stream().toArray(SortableItem[]::new));
-
-    } catch (InvalidSortInputException e) {
-      throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
+    if (!validator.isValid()) {
+      throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, validator.getMessage());
     }
+
+    logger.info(String.format("[%s] Request at '%s'", RequestMethod.POST, "/api/sort"));
+
+    return runner.runBenchmark(validator.getAlgorithms(),
+        validator.getParsedData().toArray(ISortableItem[]::new));
   }
 }
