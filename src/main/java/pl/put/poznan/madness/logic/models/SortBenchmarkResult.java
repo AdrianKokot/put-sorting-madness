@@ -3,6 +3,7 @@ package pl.put.poznan.madness.logic.models;
 import java.util.List;
 
 public class SortBenchmarkResult<T> {
+
   public List<T> result;
   public List<SortPerformance> algorithmsPerformance;
 

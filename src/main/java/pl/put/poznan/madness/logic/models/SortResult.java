@@ -1,6 +1,6 @@
 package pl.put.poznan.madness.logic.models;
 
-import pl.put.poznan.madness.logic.SortingAlgorithm;
+import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
 
 public class SortResult<T> {
   public T[] result;
