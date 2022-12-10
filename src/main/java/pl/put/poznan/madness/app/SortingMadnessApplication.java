@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@SpringBootApplication(scanBasePackages = {"pl.put.poznan.madness.rest"})
-public class TextTransformerApplication {
+@SpringBootApplication(scanBasePackages = {"pl.put.poznan.madness"})
+public class SortingMadnessApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TextTransformerApplication.class, args);
+      SpringApplication.run(SortingMadnessApplication.class, args);
     }
 }

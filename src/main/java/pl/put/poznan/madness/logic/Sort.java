@@ -1,7 +1,5 @@
 package pl.put.poznan.madness.logic;
 
-import java.util.List;
-
 public abstract class Sort {
 
     /**
@@ -12,5 +10,5 @@ public abstract class Sort {
         a[i] = a[j];
         a[j] = tmp;
     }
-    public abstract <T extends Comparable<? super T>> void sort(List<T> a);
+    public abstract <T extends Comparable<? super T>> void sort(T[] a);
 }
