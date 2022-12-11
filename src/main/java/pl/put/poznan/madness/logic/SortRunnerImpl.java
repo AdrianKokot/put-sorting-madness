@@ -1,5 +1,7 @@
 package pl.put.poznan.madness.logic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
 import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
@@ -33,10 +35,14 @@ public class SortRunnerImpl implements ISortRunner {
     SortingAlgorithm.BUBBLE_SORT, new BubbleSort()
   );
 
+  private static final Logger logger = LoggerFactory.getLogger(SortRunnerImpl.class);
+
   @Override
   public <T extends Comparable<T>> SortBenchmarkResult<T> runBenchmark(List<SortingAlgorithm> algorithms, T[] data) {
     List<SortPerformance> performances = new ArrayList<>();
     List<T> sortedData = null;
+
+    logger.info(String.format("Running benchmarks for: %s", algorithms.toString()));
 
     for (SortingAlgorithm algorithm : algorithms) {
       T[] arr = data.clone();
@@ -54,7 +60,9 @@ public class SortRunnerImpl implements ISortRunner {
     Instant start = Instant.now();
     sorter.sort(data);
     Instant end = Instant.now();
-    return new SortPerformance(sortingAlgorithm, Duration.between(start, end).getNano() / 1000000.0);
+    double elapsedMiliseconds = Duration.between(start, end).getNano() / 1000000.0;
+    logger.info(String.format("Sorting data using %s took %s miliseconds", sortingAlgorithm, elapsedMiliseconds));
+    return new SortPerformance(sortingAlgorithm, elapsedMiliseconds);
   }
 
   private Sorter getProperSortingStrategy(SortingAlgorithm sortingAlgorithm) {
