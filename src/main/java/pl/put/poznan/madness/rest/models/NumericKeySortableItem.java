@@ -1,8 +1,14 @@
 package pl.put.poznan.madness.rest.models;
 
 public class NumericKeySortableItem implements ISortableItem {
-  private Double orderableValue;
-  private Object resultObject;
+
+  private final Double orderableValue;
+  private final Object resultObject;
+
+  public NumericKeySortableItem(Number orderableValue, Object resultObject) {
+    this.orderableValue = orderableValue.doubleValue();
+    this.resultObject = resultObject;
+  }
 
   @Override
   public Double getOrderableValue() {
@@ -12,11 +18,6 @@ public class NumericKeySortableItem implements ISortableItem {
   @Override
   public Object getResultObject() {
     return resultObject;
-  }
-
-  public NumericKeySortableItem(Number orderableValue, Object resultObject) {
-    this.orderableValue = orderableValue.doubleValue();
-    this.resultObject = resultObject;
   }
 
   @Override

@@ -19,6 +19,7 @@ import pl.put.poznan.madness.rest.utils.SortDtoParser;
 @RestController
 @RequestMapping("/api")
 public class SortingMadnessController {
+
   private static final Logger logger = LoggerFactory.getLogger(SortingMadnessController.class);
 
   @Resource
