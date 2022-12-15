@@ -60,9 +60,9 @@ public class SortRunnerImpl implements ISortRunner {
     Instant start = Instant.now();
     sorter.sort(data);
     Instant end = Instant.now();
-    double elapsedMiliseconds = Duration.between(start, end).getNano() / 1000000.0;
-    logger.info(String.format("Sorting data using %s took %s miliseconds", sortingAlgorithm, elapsedMiliseconds));
-    return new SortPerformance(sortingAlgorithm, elapsedMiliseconds);
+    double elapsedMilliseconds = Duration.between(start, end).getNano() / 1000000.0;
+    logger.debug(String.format("Sorting data using %s took %s milliseconds", sortingAlgorithm, elapsedMilliseconds));
+    return new SortPerformance(sortingAlgorithm, elapsedMilliseconds);
   }
 
   private Sorter getProperSortingStrategy(SortingAlgorithm sortingAlgorithm) {
