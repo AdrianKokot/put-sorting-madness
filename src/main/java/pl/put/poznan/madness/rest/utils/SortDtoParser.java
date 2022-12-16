@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Utility class that provides methods for parsing a {@link SortDto} object and converting it into a list of
+ * Utility class that parses a {@link SortDto} object into a list of
  * {@link ISortableItem} objects that can be used to sort data.
  *
  * This class provides a static method for parsing a {@link SortDto} object and returning a {@link SortDtoParser}
