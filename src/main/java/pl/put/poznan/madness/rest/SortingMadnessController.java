@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
+import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
 import pl.put.poznan.madness.rest.models.ISortableItem;
 import pl.put.poznan.madness.rest.models.SortDto;
 import pl.put.poznan.madness.rest.utils.SortDtoParser;
@@ -37,8 +38,8 @@ public class SortingMadnessController {
    *   "data": [3, 2, 5, 1, 4]
    * }}</pre>
    *
-   * @param sortInput a {@link pl.put.poznan.madness.rest.models.SortDto} object containing the algorithms and data to be sorted
-   * @return a {@link pl.put.poznan.madness.logic.models.SortBenchmarkResult SortBenchmarkResult} object representing the results of the benchmark
+   * @param sortInput a {@link SortDto} object containing the algorithms and data to be sorted
+   * @return a {@link SortBenchmarkResult} object representing the results of the benchmark
    * @throws ResponseStatusException if the input is invalid
    */
   @RequestMapping(path = "/sort", method = RequestMethod.POST, produces = "application/json")
