@@ -14,15 +14,40 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Utility class that parses a {@link SortDto} object into a list of
+ * {@link ISortableItem} objects that can be used to sort data.
+ *
+ * This class provides a static method for parsing a {@link SortDto} object and returning a {@link SortDtoParser}
+ * object that contains the parsed data and any error messages that may have occurred during parsing.
+ *
+ * The parsed data can be retrieved using the {@link #getParsedData()} method, and the error message (if any) can be
+ * retrieved using the {@link #getMessage()} method. The {@link #isValid()} method can be used to check whether the
+ * parsing was successful or not.
+ */
 public class SortDtoParser {
 
   private static final String STRING = "String";
   private static final String NUMBER = "Number";
-
+  /**
+   * The {@link SortDto} object to be parsed.
+   */
   private final SortDto sortDto;
+  /**
+   * A string containing an error message if an error occurred during parsing, or {@code null} if no error occurred.
+   */
   private String errorMessage = null;
+  /**
+   * A list of {@link ISortableItem} objects representing the parsed data.
+   */
   private List<ISortableItem> parsedData;
 
+  /**
+   * Constructs a new {@link SortDtoParser} object with the given {@link SortDto} object.
+   * If validating fails the {@link SortDtoParser#errorMessage} will be populated with the corresponding error
+   *
+   * @param dto the {@link SortDto} object to be parsed
+   */
   private SortDtoParser(SortDto dto) {
     this.sortDto = dto;
 
@@ -33,6 +58,12 @@ public class SortDtoParser {
     }
   }
 
+  /**
+   * Returns a new {@link SortDtoParser} object with the given {@link SortDto} object.
+   *
+   * @param dto the {@link SortDto} object to be parsed
+   * @return {@link SortDtoParser} object with validation result of given {@link SortDto} object
+   */
   public static SortDtoParser parse(SortDto dto) {
     return new SortDtoParser(dto);
   }
@@ -49,6 +80,16 @@ public class SortDtoParser {
     return errorMessage == null;
   }
 
+  /**
+   * Setups the {@link SortDtoParser} object by parsing object's {@link SortDtoParser#sortDto}. Validates that the
+   * data is:
+   * <ul>
+   *     <li>all of same sortable type,</li>
+   *     <li>either a Number, a String or an object with sortable property,</li>
+   *     <li>if the data is made up of objects then all of them need to have a desired key.</li>
+   * </ul>
+   * @throws InvalidSortInputException if is supplied with an empty array
+   */
   private void setup() throws InvalidSortInputException {
     if (sortDto.data.size() == 0) {
       throw new InvalidSortInputException("Missing data to sort.");
@@ -93,6 +134,12 @@ public class SortDtoParser {
     }
   }
 
+  /**
+   * Determines the type of given keys.
+   * @param list list of keys
+   * @return type of keys
+   * @throws InvalidSortInputException if given keys aren't all comparable with each other
+   */
   private String determineSortableImpl(List<Object> list) throws InvalidSortInputException {
     if (list.stream().allMatch(String.class::isInstance)) {
       return STRING;
