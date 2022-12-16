@@ -62,7 +62,7 @@ public class SortDtoParser {
    * Returns a new {@link SortDtoParser} object with the given {@link SortDto} object.
    *
    * @param dto the {@link SortDto} object to be parsed
-   * @return {@link SortDtoParser} object with the given {@link SortDto} object
+   * @return {@link SortDtoParser} object with validation result of given {@link SortDto} object
    */
   public static SortDtoParser parse(SortDto dto) {
     return new SortDtoParser(dto);
