@@ -2,7 +2,7 @@ package pl.put.poznan.madness.rest.utils;
 
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
 import pl.put.poznan.madness.rest.exceptions.InvalidSortInputException;
-import pl.put.poznan.madness.rest.exceptions.MissingPropertyKeyException;
+import pl.put.poznan.madness.rest.exceptions.MissingOrderByKeyException;
 import pl.put.poznan.madness.rest.exceptions.NotAllCustomObjectHaveSortablePropertyException;
 import pl.put.poznan.madness.rest.models.ISortableItem;
 import pl.put.poznan.madness.rest.models.NumericKeySortableItem;
@@ -95,12 +95,16 @@ public class SortDtoParser {
       throw new InvalidSortInputException("Missing data to sort.");
     }
 
+    if(sortDto.algorithms.size() == 0) {
+      throw new InvalidSortInputException("Sorting algorithms not specified.");
+    }
+
     List<Object> keys = sortDto.data;
 
     if (sortDto.data.stream().anyMatch(Map.class::isInstance)) {
 
       if (sortDto.orderBy.isEmpty()) {
-        throw new MissingPropertyKeyException();
+        throw new MissingOrderByKeyException();
       }
 
       List<Object> itemsWithOrderableKey = sortDto.data.stream()
