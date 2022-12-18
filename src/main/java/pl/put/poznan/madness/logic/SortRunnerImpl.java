@@ -7,12 +7,7 @@ import pl.put.poznan.madness.logic.interfaces.ISortRunner;
 import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
 import pl.put.poznan.madness.logic.models.SortPerformance;
 import pl.put.poznan.madness.logic.sorting.Sorter;
-import pl.put.poznan.madness.logic.sorting.strategies.BubbleSort;
-import pl.put.poznan.madness.logic.sorting.strategies.InsertionSort;
-import pl.put.poznan.madness.logic.sorting.strategies.JavaSort;
-import pl.put.poznan.madness.logic.sorting.strategies.QuickSort;
-import pl.put.poznan.madness.logic.sorting.strategies.SelectionSort;
-import pl.put.poznan.madness.logic.sorting.strategies.ShellSort;
+import pl.put.poznan.madness.logic.sorting.strategies.*;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy;
 
@@ -48,7 +43,8 @@ public class SortRunnerImpl implements ISortRunner {
     SortingAlgorithm.JAVA_SORT, new JavaSort(),
     SortingAlgorithm.SELECTION_SORT, new SelectionSort(),
     SortingAlgorithm.SHELL_SORT, new ShellSort(),
-    SortingAlgorithm.BUBBLE_SORT, new BubbleSort()
+    SortingAlgorithm.BUBBLE_SORT, new BubbleSort(),
+    SortingAlgorithm.MERGE_SORT, new MergeSort()
   );
 
   /**
