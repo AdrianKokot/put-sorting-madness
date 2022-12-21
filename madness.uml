@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>pl.put.poznan.madness</OriginalElement>
+  <nodes>
+    <node x="-17.0" y="-246.0">pl.put.poznan.madness.rest.utils.SortDtoParser</node>
+    <node x="1675.0" y="-14.0">pl.put.poznan.madness.logic.sorting.strategies.ShellSort</node>
+    <node x="707.0" y="-14.0">pl.put.poznan.madness.logic.SortRunnerImpl</node>
+    <node x="1346.0" y="-14.0">pl.put.poznan.madness.logic.sorting.strategies.JavaSort</node>
+    <node x="1832.0" y="-14.0">pl.put.poznan.madness.logic.sorting.strategies.BubbleSort</node>
+    <node x="1853.625850340136" y="175.26530612244892">pl.put.poznan.madness.logic.sorting.strategies.boundary.AbstractSort</node>
+    <node x="-243.0" y="-42.0">pl.put.poznan.madness.rest.models.NumericKeySortableItem</node>
+    <node x="1189.0" y="-14.0">pl.put.poznan.madness.logic.sorting.strategies.MergeSort</node>
+    <node x="1503.0" y="-14.0">pl.put.poznan.madness.logic.sorting.strategies.InsertionSort</node>
+    <node x="2148.0" y="-14.0">pl.put.poznan.madness.logic.sorting.strategies.SelectionSort</node>
+    <node x="1131.75" y="208.5">pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy</node>
+    <node x="1991.0" y="-14.0">pl.put.poznan.madness.logic.sorting.strategies.QuickSort</node>
+    <node x="89.75" y="194.5">pl.put.poznan.madness.rest.models.ISortableItem</node>
+    <node x="263.0" y="-28.0">pl.put.poznan.madness.rest.SortingMadnessController</node>
+    <node x="331.5" y="208.5">pl.put.poznan.madness.logic.interfaces.ISortRunner</node>
+    <node x="13.0" y="-42.0">pl.put.poznan.madness.rest.models.StringKeySortableItem</node>
+    <node x="813.5" y="96.0">pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="pl.put.poznan.madness.rest.models.StringKeySortableItem" target="pl.put.poznan.madness.rest.models.ISortableItem" relationship="REALIZATION">
+      <point x="0.0" y="59.0" />
+      <point x="123.0" y="179.5" />
+      <point x="142.5" y="179.5" />
+      <point x="-52.75" y="-45.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.sorting.strategies.SelectionSort" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy" relationship="REALIZATION">
+      <point x="-36.0" y="31.0" />
+      <point x="2184.0" y="58.0" />
+      <point x="1252.5" y="58.0" />
+      <point x="40.25" y="-31.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.sorting.strategies.BubbleSort" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.AbstractSort" relationship="GENERALIZATION">
+      <point x="32.25" y="31.0" />
+      <point x="1928.75" y="68.0" />
+      <point x="1921.625850340136" y="68.0" />
+      <point x="0.0" y="-15.5" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.SortRunnerImpl" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy" relationship="TO_MANY">
+      <point x="150.66666666666669" y="31.0" />
+      <point x="1083.6666666666667" y="58.0" />
+      <point x="1172.0" y="58.0" />
+      <point x="-40.25" y="-31.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.sorting.strategies.QuickSort" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy" relationship="REALIZATION">
+      <point x="-31.75" y="31.0" />
+      <point x="2022.75" y="58.0" />
+      <point x="1252.5" y="58.0" />
+      <point x="40.25" y="-31.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.sorting.strategies.InsertionSort" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy" relationship="REALIZATION">
+      <point x="0.0" y="31.0" />
+      <point x="1574.0" y="58.0" />
+      <point x="1252.5" y="58.0" />
+      <point x="40.25" y="-31.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.SortRunnerImpl" target="pl.put.poznan.madness.logic.interfaces.ISortRunner" relationship="REALIZATION">
+      <point x="-150.66666666666669" y="31.0" />
+      <point x="782.3333333333333" y="58.0" />
+      <point x="670.5" y="58.0" />
+      <point x="113.0" y="-31.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.SortRunnerImpl" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm" relationship="TO_MANY">
+      <point x="0.0" y="31.0" />
+      <point x="0.0" y="-143.5" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.sorting.strategies.JavaSort" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy" relationship="REALIZATION">
+      <point x="0.0" y="31.0" />
+      <point x="1409.5" y="58.0" />
+      <point x="1252.5" y="58.0" />
+      <point x="40.25" y="-31.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.sorting.strategies.MergeSort" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy" relationship="REALIZATION">
+      <point x="0.0" y="31.0" />
+      <point x="40.25" y="-31.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.rest.models.NumericKeySortableItem" target="pl.put.poznan.madness.rest.models.ISortableItem" relationship="REALIZATION">
+      <point x="0.0" y="59.0" />
+      <point x="-130.0" y="86.0" />
+      <point x="123.0" y="86.0" />
+      <point x="123.0" y="179.5" />
+      <point x="142.5" y="179.5" />
+      <point x="-52.75" y="-45.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.sorting.strategies.QuickSort" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.AbstractSort" relationship="GENERALIZATION">
+      <point x="31.75" y="31.0" />
+      <point x="2086.25" y="68.0" />
+      <point x="1921.625850340136" y="68.0" />
+      <point x="0.0" y="-15.5" />
+    </edge>
+    <edge source="pl.put.poznan.madness.rest.utils.SortDtoParser" target="pl.put.poznan.madness.rest.models.StringKeySortableItem" relationship="CREATE">
+      <point x="0.0" y="87.0" />
+      <point x="0.0" y="-59.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.rest.utils.SortDtoParser" target="pl.put.poznan.madness.rest.models.NumericKeySortableItem" relationship="CREATE">
+      <point x="-93.33333333333334" y="87.0" />
+      <point x="29.66666666666663" y="-62.0" />
+      <point x="-130.0" y="-62.0" />
+      <point x="0.0" y="-59.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.sorting.strategies.BubbleSort" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy" relationship="REALIZATION">
+      <point x="-32.25" y="31.0" />
+      <point x="1864.25" y="58.0" />
+      <point x="1252.5" y="58.0" />
+      <point x="40.25" y="-31.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.sorting.strategies.SelectionSort" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.AbstractSort" relationship="GENERALIZATION">
+      <point x="36.0" y="31.0" />
+      <point x="2256.0" y="136.0" />
+      <point x="1921.625850340136" y="136.0" />
+      <point x="0.0" y="-15.5" />
+    </edge>
+    <edge source="pl.put.poznan.madness.rest.utils.SortDtoParser" target="pl.put.poznan.madness.rest.models.ISortableItem" relationship="TO_MANY">
+      <point x="93.33333333333337" y="87.0" />
+      <point x="216.33333333333337" y="-62.0" />
+      <point x="248.0" y="-62.0" />
+      <point x="52.75" y="-45.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.rest.SortingMadnessController" target="pl.put.poznan.madness.logic.interfaces.ISortRunner" relationship="TO_ONE">
+      <point x="0.0" y="45.0" />
+      <point x="-113.0" y="-31.0" />
+    </edge>
+    <edge source="pl.put.poznan.madness.logic.sorting.strategies.ShellSort" target="pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy" relationship="REALIZATION">
+      <point x="0.0" y="31.0" />
+      <point x="1738.5" y="58.0" />
+      <point x="1252.5" y="58.0" />
+      <point x="40.25" y="-31.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.7386934673366834" showDependencies="true" x="1050.5" y="78.5" />
+  <SelectedNodes>
+    <node>pl.put.poznan.madness.logic.sorting.strategies.boundary.AbstractSort</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
