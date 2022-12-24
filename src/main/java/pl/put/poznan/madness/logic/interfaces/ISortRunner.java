@@ -11,4 +11,9 @@ public interface ISortRunner {
       List<SortingAlgorithm> algorithms,
       T[] data,
       SortDirection direction);
+
+  <T extends Comparable<T>> SortBenchmarkResult<T> runBenchmark(
+      List<SortingAlgorithm> algorithms,
+      T[] data,
+      SortDirection direction, int stopAfterIteration);
 }

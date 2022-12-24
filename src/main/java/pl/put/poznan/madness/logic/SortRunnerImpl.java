@@ -139,4 +139,11 @@ public class SortRunnerImpl implements ISortRunner {
     return new Sorter(SORTING_ALGORITHMS_MAPPING.get(sortingAlgorithm));
   }
 
+  @Override
+  public <T extends Comparable<T>> SortBenchmarkResult<T> runBenchmark(List<SortingAlgorithm> algorithms, T[] data,
+      SortDirection direction, int stopAfterIteration) {
+    // TODO #36 - add stopping sorting after iterations count
+    return null;
+  }
+
 }
