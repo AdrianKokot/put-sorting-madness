@@ -14,19 +14,15 @@ public class QuickSort extends AbstractSort implements SortingStrategy {
     int low = s_low;
     int high = s_high;
     if (low == high - 1) {
-      if (a[low].compareTo(a[high]) > 0)
-        swap(a, low, high);
+      if (a[low].compareTo(a[high]) > 0) swap(a, low, high);
     } else if (low < high) {
       T pivot = a[(low + high) / 2];
       a[(low + high) / 2] = a[high];
       a[high] = pivot;
       while (low < high) {
-        while ((a[low].compareTo(pivot) < 1) && (low < high))
-          low++;
-        while ((pivot.compareTo(a[high]) < 1) && (low < high))
-          high--;
-        if (low < high)
-          swap(a, low, high);
+        while ((a[low].compareTo(pivot) < 1) && (low < high)) low++;
+        while ((pivot.compareTo(a[high]) < 1) && (low < high)) high--;
+        if (low < high) swap(a, low, high);
       }
       a[s_high] = a[high];
       a[high] = pivot;

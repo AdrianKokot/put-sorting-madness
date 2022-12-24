@@ -1,8 +1,7 @@
 package pl.put.poznan.madness.logic.sorting.strategies;
 
-import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy;
-
 import java.util.Arrays;
+import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy;
 
 public class MergeSort implements SortingStrategy {
 
