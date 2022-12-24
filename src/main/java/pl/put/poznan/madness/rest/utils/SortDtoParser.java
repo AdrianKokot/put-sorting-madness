@@ -1,6 +1,7 @@
 package pl.put.poznan.madness.rest.utils;
 
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
+import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortDirection;
 import pl.put.poznan.madness.rest.exceptions.InvalidSortInputException;
 import pl.put.poznan.madness.rest.exceptions.MissingOrderByKeyException;
 import pl.put.poznan.madness.rest.exceptions.NotAllCustomObjectHaveSortablePropertyException;
@@ -27,8 +28,8 @@ import java.util.stream.IntStream;
  */
 public class SortDtoParser {
 
-  private static final String STRING = "String";
-  private static final String NUMBER = "Number";
+  private static final String STRING_KEY = "String";
+  private static final String NUMERIC_KEY = "Number";
   /**
    * The {@link SortDto} object to be parsed.
    */
@@ -120,7 +121,7 @@ public class SortDtoParser {
         .collect(Collectors.toList());
     }
 
-    if (STRING.equals(determineSortableImpl(keys))) {
+    if (STRING_KEY.equals(determineSortableImpl(keys))) {
       final String[] stringKeys = keys.stream().map(String.class::cast).toArray(String[]::new);
 
       this.parsedData = IntStream.range(0, sortDto.data.size())
@@ -142,11 +143,11 @@ public class SortDtoParser {
    */
   private String determineSortableImpl(List<Object> list) throws InvalidSortInputException {
     if (list.stream().allMatch(String.class::isInstance)) {
-      return STRING;
+      return STRING_KEY;
     }
 
     if (list.stream().allMatch(Number.class::isInstance)) {
-      return NUMBER;
+      return NUMERIC_KEY;
     }
 
     throw new InvalidSortInputException("Keys selected to sort items must be comparable.");
@@ -154,5 +155,9 @@ public class SortDtoParser {
 
   public List<SortingAlgorithm> getAlgorithms() {
     return sortDto.algorithms.stream().distinct().collect(Collectors.toList());
+  }
+
+  public SortDirection getDirection() {
+    return sortDto.direction;
   }
 }

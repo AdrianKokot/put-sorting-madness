@@ -57,7 +57,7 @@ public class SortingMadnessController {
     logger.info(String.format("[%s] Request at '%s'", RequestMethod.POST, "/api/sort"));
 
     return runner.runBenchmark(validator.getAlgorithms(),
-        validator.getParsedData().toArray(ISortableItem[]::new));
+        validator.getParsedData().toArray(ISortableItem[]::new), validator.getDirection());
   }
 
   @RequestMapping(path = "/algorithms", method = RequestMethod.GET, produces = "application/json")
