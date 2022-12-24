@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
+import pl.put.poznan.madness.logic.models.AutomaticSortPerformance;
 import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
 import pl.put.poznan.madness.logic.models.SortPerformance;
 import pl.put.poznan.madness.logic.sorting.Sorter;
@@ -89,6 +90,7 @@ public class SortRunnerImpl implements ISortRunner {
         sortedData = new ArrayList<>(Arrays.asList(arr));
       }
     }
+
     return new SortBenchmarkResult<>(sortedData, performances, direction);
   }
 
@@ -105,13 +107,26 @@ public class SortRunnerImpl implements ISortRunner {
    */
   private <T extends Comparable<? super T>> SortPerformance getSortingPerformanceOfGivenAlgorithm(
       SortingAlgorithm sortingAlgorithm, T[] data) {
-    Sorter sorter = getProperSortingStrategy(sortingAlgorithm);
+    SortPerformance performance;
+    Sorter sorter;
+
+    if (sortingAlgorithm == SortingAlgorithm.AUTOMATIC) {
+      // TODO #37 - add detecting best algorithm
+      sorter = getProperSortingStrategy(SortingAlgorithm.JAVA_SORT);
+      performance = new AutomaticSortPerformance(SortingAlgorithm.JAVA_SORT, 0);
+    } else {
+      sorter = getProperSortingStrategy(sortingAlgorithm);
+      performance = new SortPerformance(sortingAlgorithm, 0);
+    }
+
     Instant start = Instant.now();
     sorter.sort(data);
     Instant end = Instant.now();
-    double elapsedMilliseconds = Duration.between(start, end).getNano() / 1000000.0;
-    logger.debug(String.format("Sorting data using %s took %s milliseconds", sortingAlgorithm, elapsedMilliseconds));
-    return new SortPerformance(sortingAlgorithm, elapsedMilliseconds);
+    performance.elapsedMilliseconds = Duration.between(start, end).getNano() / 1000000.0;
+    logger.debug(String.format("Sorting data using %s took %s milliseconds", performance.algorithm,
+        performance.elapsedMilliseconds));
+
+    return performance;
   }
 
   /**
