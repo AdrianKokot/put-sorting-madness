@@ -1,6 +1,5 @@
 package pl.put.poznan.madness.logic.sorting.strategies.boundary;
 
-
 public enum SortingAlgorithm {
   AUTOMATIC,
   BUBBLE_SORT,

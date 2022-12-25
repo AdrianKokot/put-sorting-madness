@@ -9,5 +9,4 @@ public class AutomaticSortPerformance extends SortPerformance {
     super(SortingAlgorithm.AUTOMATIC, elapsedMilliseconds);
     this.automaticallyDeterminedAlgorithm = algorithm;
   }
-
 }
