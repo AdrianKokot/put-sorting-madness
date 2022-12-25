@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
 import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
-import pl.put.poznan.madness.rest.models.ISortableItem;
 import pl.put.poznan.madness.rest.models.SortDto;
 import pl.put.poznan.madness.rest.utils.SortDtoParser;
 
@@ -54,8 +53,16 @@ public class SortingMadnessController {
 
     logger.info(String.format("[%s] Request at '%s'", RequestMethod.POST, "/api/sort"));
 
+    if (validator.containsIterationsCount()) {
+      return runner.runBenchmark(
+          validator.getAlgorithms(),
+          validator.getParsedData(),
+          validator.getDirection(),
+          validator.getIterationsCount());
+    }
+
     return runner.runBenchmark(
-        validator.getAlgorithms(), validator.getParsedData().toArray(ISortableItem[]::new));
+        validator.getAlgorithms(), validator.getParsedData(), validator.getDirection());
   }
 
   @RequestMapping(path = "/algorithms", method = RequestMethod.GET, produces = "application/json")

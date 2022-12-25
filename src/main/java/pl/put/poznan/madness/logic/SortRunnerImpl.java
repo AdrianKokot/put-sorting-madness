@@ -10,10 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
+import pl.put.poznan.madness.logic.models.AutomaticSortPerformance;
 import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
 import pl.put.poznan.madness.logic.models.SortPerformance;
 import pl.put.poznan.madness.logic.sorting.Sorter;
 import pl.put.poznan.madness.logic.sorting.strategies.*;
+import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortDirection;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy;
 
@@ -59,17 +61,20 @@ public class SortRunnerImpl implements ISortRunner {
    * @param algorithms a list of {@link SortingAlgorithm} values representing the sorting algorithms
    *     to be benchmarked
    * @param data the data set to be sorted
+   * @param direction the sort order
    * @param <T> the type of the elements in the data set, must implement {@link Comparable}
    * @return a {@link SortBenchmarkResult} object containing the sorted data and the performance
    *     results of each sorting algorithm
    */
   @Override
   public <T extends Comparable<T>> SortBenchmarkResult<T> runBenchmark(
-      List<SortingAlgorithm> algorithms, T[] data) {
+      List<SortingAlgorithm> algorithms, T[] data, SortDirection direction) {
     List<SortPerformance> performances = new ArrayList<>();
     List<T> sortedData = null;
 
-    logger.info(String.format("Running benchmarks for: %s", algorithms.toString()));
+    logger.info(
+        String.format(
+            "Running benchmarks for: %s [%s]", algorithms.toString(), direction.toString()));
 
     for (SortingAlgorithm algorithm : algorithms) {
       T[] arr = data.clone();
@@ -79,7 +84,8 @@ public class SortRunnerImpl implements ISortRunner {
         sortedData = new ArrayList<>(Arrays.asList(arr));
       }
     }
-    return new SortBenchmarkResult<>(sortedData, performances);
+
+    return new SortBenchmarkResult<>(sortedData, performances, direction);
   }
 
   /**
@@ -94,23 +100,47 @@ public class SortRunnerImpl implements ISortRunner {
    */
   private <T extends Comparable<? super T>> SortPerformance getSortingPerformanceOfGivenAlgorithm(
       SortingAlgorithm sortingAlgorithm, T[] data) {
-    Sorter sorter = getProperSortingStrategy(sortingAlgorithm);
+    SortPerformance performance;
+    Sorter sorter;
+
+    if (sortingAlgorithm == SortingAlgorithm.AUTOMATIC) {
+      // TODO #37 - add detecting best algorithm
+      sorter = getProperSortingStrategy(SortingAlgorithm.JAVA_SORT);
+      performance = new AutomaticSortPerformance(SortingAlgorithm.JAVA_SORT, 0);
+    } else {
+      sorter = getProperSortingStrategy(sortingAlgorithm);
+      performance = new SortPerformance(sortingAlgorithm, 0);
+    }
+
     Instant start = Instant.now();
     sorter.sort(data);
     Instant end = Instant.now();
-    double elapsedMilliseconds = Duration.between(start, end).getNano() / 1000000.0;
+    performance.elapsedMilliseconds = Duration.between(start, end).getNano() / 1000000.0;
     logger.debug(
         String.format(
-            "Sorting data using %s took %s milliseconds", sortingAlgorithm, elapsedMilliseconds));
-    return new SortPerformance(sortingAlgorithm, elapsedMilliseconds);
+            "Sorting data using %s took %s milliseconds",
+            performance.algorithm, performance.elapsedMilliseconds));
+
+    return performance;
   }
+
   /**
-   * Accessess the proper {@link Sorter} object based on given enum value
+   * Accesses the proper {@link Sorter} object based on given enum value
    *
    * @param sortingAlgorithm a {@link SortingAlgorithm} strategy to do the sort
    * @return a proper {@link Sorter} capable of sorting with the given strategy
    */
   private Sorter getProperSortingStrategy(SortingAlgorithm sortingAlgorithm) {
     return new Sorter(SORTING_ALGORITHMS_MAPPING.get(sortingAlgorithm));
+  }
+
+  @Override
+  public <T extends Comparable<T>> SortBenchmarkResult<T> runBenchmark(
+      List<SortingAlgorithm> algorithms,
+      T[] data,
+      SortDirection direction,
+      int stopAfterIteration) {
+    // TODO #36 - add stopping sorting after iterations count
+    return null;
   }
 }

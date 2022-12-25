@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortDirection;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
 import pl.put.poznan.madness.rest.exceptions.InvalidSortInputException;
 import pl.put.poznan.madness.rest.exceptions.MissingOrderByKeyException;
@@ -27,8 +28,8 @@ import pl.put.poznan.madness.rest.models.StringKeySortableItem;
  */
 public class SortDtoParser {
 
-  private static final String STRING = "String";
-  private static final String NUMBER = "Number";
+  private static final String STRING_KEY = "String";
+  private static final String NUMERIC_KEY = "Number";
   /** The {@link SortDto} object to be parsed. */
   private final SortDto sortDto;
   /**
@@ -66,8 +67,8 @@ public class SortDtoParser {
     return new SortDtoParser(dto);
   }
 
-  public List<ISortableItem> getParsedData() {
-    return parsedData;
+  public ISortableItem[] getParsedData() {
+    return parsedData.toArray(ISortableItem[]::new);
   }
 
   public String getMessage() {
@@ -122,7 +123,7 @@ public class SortDtoParser {
               .collect(Collectors.toList());
     }
 
-    if (STRING.equals(determineSortableImpl(keys))) {
+    if (STRING_KEY.equals(determineSortableImpl(keys))) {
       final String[] stringKeys = keys.stream().map(String.class::cast).toArray(String[]::new);
 
       this.parsedData =
@@ -152,11 +153,11 @@ public class SortDtoParser {
    */
   private String determineSortableImpl(List<Object> list) throws InvalidSortInputException {
     if (list.stream().allMatch(String.class::isInstance)) {
-      return STRING;
+      return STRING_KEY;
     }
 
     if (list.stream().allMatch(Number.class::isInstance)) {
-      return NUMBER;
+      return NUMERIC_KEY;
     }
 
     throw new InvalidSortInputException("Keys selected to sort items must be comparable.");
@@ -164,5 +165,17 @@ public class SortDtoParser {
 
   public List<SortingAlgorithm> getAlgorithms() {
     return sortDto.algorithms.stream().distinct().collect(Collectors.toList());
+  }
+
+  public SortDirection getDirection() {
+    return sortDto.direction;
+  }
+
+  public boolean containsIterationsCount() {
+    return sortDto.iterationsCount != null && sortDto.iterationsCount > 0;
+  }
+
+  public int getIterationsCount() {
+    return sortDto.iterationsCount.intValue();
   }
 }
