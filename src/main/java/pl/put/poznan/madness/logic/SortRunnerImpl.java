@@ -78,7 +78,7 @@ public class SortRunnerImpl implements ISortRunner {
 
     for (SortingAlgorithm algorithm : algorithms) {
       T[] arr = data.clone();
-      performances.add(getSortingPerformanceOfGivenAlgorithm(algorithm, arr));
+      performances.add(getSortingPerformanceOfGivenAlgorithm(algorithm, arr, direction));
 
       if (sortedData == null) {
         sortedData = new ArrayList<>(Arrays.asList(arr));
@@ -99,7 +99,7 @@ public class SortRunnerImpl implements ISortRunner {
    *     algorithm to do the test
    */
   private <T extends Comparable<? super T>> SortPerformance getSortingPerformanceOfGivenAlgorithm(
-      SortingAlgorithm sortingAlgorithm, T[] data) {
+      SortingAlgorithm sortingAlgorithm, T[] data, SortDirection sortDirection) {
     SortPerformance performance;
     Sorter sorter;
 
@@ -113,7 +113,7 @@ public class SortRunnerImpl implements ISortRunner {
     }
 
     Instant start = Instant.now();
-    sorter.sort(data);
+    sorter.sort(data, sortDirection);
     Instant end = Instant.now();
     performance.elapsedMilliseconds = Duration.between(start, end).getNano() / 1000000.0;
     logger.debug(
