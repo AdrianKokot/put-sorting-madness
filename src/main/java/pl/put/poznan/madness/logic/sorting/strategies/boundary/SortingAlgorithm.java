@@ -7,6 +7,5 @@ public enum SortingAlgorithm {
   QUICK_SORT,
   SELECTION_SORT,
   SHELL_SORT,
-  INSERTION_SORT,
-  JAVA_SORT
+  INSERTION_SORT
 }

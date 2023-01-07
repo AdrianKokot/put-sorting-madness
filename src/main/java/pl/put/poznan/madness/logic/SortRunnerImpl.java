@@ -17,7 +17,6 @@ import pl.put.poznan.madness.logic.models.SortPerformance;
 import pl.put.poznan.madness.logic.sorting.Sorter;
 import pl.put.poznan.madness.logic.sorting.strategies.BubbleSort;
 import pl.put.poznan.madness.logic.sorting.strategies.InsertionSort;
-import pl.put.poznan.madness.logic.sorting.strategies.JavaSort;
 import pl.put.poznan.madness.logic.sorting.strategies.MergeSort;
 import pl.put.poznan.madness.logic.sorting.strategies.QuickSort;
 import pl.put.poznan.madness.logic.sorting.strategies.SelectionSort;
@@ -51,7 +50,6 @@ public class SortRunnerImpl implements ISortRunner {
       Map.of(
           SortingAlgorithm.QUICK_SORT, new QuickSort(),
           SortingAlgorithm.INSERTION_SORT, new InsertionSort(),
-          SortingAlgorithm.JAVA_SORT, new JavaSort(),
           SortingAlgorithm.SELECTION_SORT, new SelectionSort(),
           SortingAlgorithm.SHELL_SORT, new ShellSort(),
           SortingAlgorithm.BUBBLE_SORT, new BubbleSort(),
@@ -118,8 +116,8 @@ public class SortRunnerImpl implements ISortRunner {
 
     if (sortingAlgorithm == SortingAlgorithm.AUTOMATIC) {
       // TODO #37 - add detecting best algorithm
-      sorter = getProperSortingStrategy(SortingAlgorithm.JAVA_SORT);
-      performance = new AutomaticSortPerformance(SortingAlgorithm.JAVA_SORT, 0);
+      sorter = getProperSortingStrategy(SortingAlgorithm.MERGE_SORT);
+      performance = new AutomaticSortPerformance(SortingAlgorithm.MERGE_SORT, 0);
     } else {
       sorter = getProperSortingStrategy(sortingAlgorithm);
       performance = new SortPerformance(sortingAlgorithm, 0);
