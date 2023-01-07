@@ -4,5 +4,6 @@ public interface SortingStrategy {
 
   <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection);
 
-  <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection, int iterationsCount);
+  <T extends Comparable<? super T>> void sort(
+      T[] a, SortDirection sortDirection, int iterationsCount);
 }

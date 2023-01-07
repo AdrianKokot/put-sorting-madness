@@ -1,7 +1,6 @@
 package pl.put.poznan.madness.logic.sorting.strategies;
 
 import java.util.Arrays;
-
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortDirection;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy;
 
@@ -21,7 +20,8 @@ public class MergeSort implements SortingStrategy {
   }
 
   @Override
-  public <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection, int maxIterations) {
+  public <T extends Comparable<? super T>> void sort(
+      T[] a, SortDirection sortDirection, int maxIterations) {
     if (a.length > 1 && maxIterations > 0) {
       T[] left = Arrays.copyOfRange(a, 0, a.length / 2);
       T[] right = Arrays.copyOfRange(a, a.length / 2, a.length);
@@ -33,7 +33,8 @@ public class MergeSort implements SortingStrategy {
     }
   }
 
-  private static <T extends Comparable<? super T>> void merge(T[] result, T[] left, T[] right, SortDirection sortDirection) {
+  private static <T extends Comparable<? super T>> void merge(
+      T[] result, T[] left, T[] right, SortDirection sortDirection) {
     int i = 0;
     int j = 0;
     int k = 0;

@@ -26,7 +26,8 @@ public class InsertionSort implements SortingStrategy {
   }
 
   @Override
-  public <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection, int iterationsCount) {
+  public <T extends Comparable<? super T>> void sort(
+      T[] a, SortDirection sortDirection, int iterationsCount) {
     int iterations = 0;
     for (int i = 1; i < a.length && iterations < iterationsCount; i++, iterations++) {
       int j = i;

@@ -12,11 +12,13 @@ public class QuickSort extends AbstractSort implements SortingStrategy {
   }
 
   @Override
-  public <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection, int iterationsCount) {
+  public <T extends Comparable<? super T>> void sort(
+      T[] a, SortDirection sortDirection, int iterationsCount) {
     sort(a, 0, a.length - 1, sortDirection, iterationsCount);
   }
 
-  private <T extends Comparable<? super T>> void sort(T[] a, int s_low, int s_high, SortDirection sortDirection, int counter) {
+  private <T extends Comparable<? super T>> void sort(
+      T[] a, int s_low, int s_high, SortDirection sortDirection, int counter) {
     if (counter == 0) {
       return;
     }

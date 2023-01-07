@@ -22,7 +22,8 @@ public class SelectionSort extends AbstractSort implements SortingStrategy {
   }
 
   @Override
-  public <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection, int iterationsCount) {
+  public <T extends Comparable<? super T>> void sort(
+      T[] a, SortDirection sortDirection, int iterationsCount) {
     for (int i = 0; i < a.length; i++) {
       int min = i;
       int counter = 0;

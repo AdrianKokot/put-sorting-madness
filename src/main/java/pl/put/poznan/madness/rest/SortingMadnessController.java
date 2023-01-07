@@ -1,5 +1,7 @@
 package pl.put.poznan.madness.rest;
 
+import java.util.EnumSet;
+import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,6 @@ import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
 import pl.put.poznan.madness.rest.models.SortDto;
 import pl.put.poznan.madness.rest.utils.SortDtoParser;
 
-import javax.annotation.Resource;
-import java.util.EnumSet;
-
 /**
  * SortingMadnessController is a Spring MVC controller that handles requests related to benchmarking
  * sorting operations.
@@ -28,8 +27,7 @@ public class SortingMadnessController {
 
   private static final Logger logger = LoggerFactory.getLogger(SortingMadnessController.class);
 
-  @Resource
-  private ISortRunner runner;
+  @Resource private ISortRunner runner;
 
   /**
    * Accepts a POST request with a JSON body containing the sorting algorithms and data to be
@@ -56,7 +54,10 @@ public class SortingMadnessController {
     logger.info(String.format("[%s] Request at '%s'", RequestMethod.POST, "/api/sort"));
 
     return runner.runBenchmark(
-      validator.getAlgorithms(), validator.getParsedData(), validator.getDirection(), validator.getIterationsCount());
+        validator.getAlgorithms(),
+        validator.getParsedData(),
+        validator.getDirection(),
+        validator.getIterationsCount());
   }
 
   @RequestMapping(path = "/algorithms", method = RequestMethod.GET, produces = "application/json")

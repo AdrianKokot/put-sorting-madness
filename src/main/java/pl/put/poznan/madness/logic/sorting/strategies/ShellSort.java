@@ -25,7 +25,8 @@ public class ShellSort implements SortingStrategy {
   }
 
   @Override
-  public <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection, int iterationsCount) {
+  public <T extends Comparable<? super T>> void sort(
+      T[] a, SortDirection sortDirection, int iterationsCount) {
     int h = 1;
     while ((h * 3 + 1) < a.length) h = 3 * h + 1;
     while (h > 0) {
@@ -34,12 +35,16 @@ public class ShellSort implements SortingStrategy {
         int j = i;
         int counter = 0;
         if (SortDirection.ASC.equals(sortDirection)) {
-          for (j = i; (j >= h) && (a[j - h].compareTo(s) > 0) && counter < iterationsCount; j -= h) {
+          for (j = i;
+              (j >= h) && (a[j - h].compareTo(s) > 0) && counter < iterationsCount;
+              j -= h) {
             a[j] = a[j - h];
             counter++;
           }
         } else {
-          for (j = i; (j >= h) && (a[j - h].compareTo(s) < 0) && counter < iterationsCount; j -= h) {
+          for (j = i;
+              (j >= h) && (a[j - h].compareTo(s) < 0) && counter < iterationsCount;
+              j -= h) {
             a[j] = a[j - h];
             counter++;
           }
