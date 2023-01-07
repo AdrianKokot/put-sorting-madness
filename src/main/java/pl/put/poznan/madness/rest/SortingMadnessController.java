@@ -53,16 +53,8 @@ public class SortingMadnessController {
 
     logger.info(String.format("[%s] Request at '%s'", RequestMethod.POST, "/api/sort"));
 
-    if (validator.containsIterationsCount()) {
-      return runner.runBenchmark(
-          validator.getAlgorithms(),
-          validator.getParsedData(),
-          validator.getDirection(),
-          validator.getIterationsCount());
-    }
-
     return runner.runBenchmark(
-        validator.getAlgorithms(), validator.getParsedData(), validator.getDirection());
+        validator.getAlgorithms(), validator.getParsedData(), validator.getDirection(), validator.getIterationsCount());
   }
 
   @RequestMapping(path = "/algorithms", method = RequestMethod.GET, produces = "application/json")

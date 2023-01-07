@@ -20,6 +20,19 @@ public class MergeSort implements SortingStrategy {
     }
   }
 
+  @Override
+  public <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection, int maxIterations) {
+    if (a.length > 1 && maxIterations > 0) {
+      T[] left = Arrays.copyOfRange(a, 0, a.length / 2);
+      T[] right = Arrays.copyOfRange(a, a.length / 2, a.length);
+
+      sort(left, sortDirection, maxIterations - 1);
+      sort(right, sortDirection, maxIterations - 1);
+
+      merge(a, left, right, sortDirection);
+    }
+  }
+
   private static <T extends Comparable<? super T>> void merge(T[] result, T[] left, T[] right, SortDirection sortDirection) {
     int i = 0;
     int j = 0;

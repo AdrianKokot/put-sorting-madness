@@ -16,4 +16,13 @@ public class JavaSort implements SortingStrategy {
       Arrays.sort(a, Collections.reverseOrder());
     }
   }
+
+  @Override
+  public <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection, int iterationsCount) {
+    if (SortDirection.ASC.equals(sortDirection)) {
+      Arrays.sort(a);
+    } else {
+      Arrays.sort(a, Collections.reverseOrder());
+    }
+  }
 }

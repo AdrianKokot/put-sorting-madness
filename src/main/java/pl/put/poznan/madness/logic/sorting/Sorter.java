@@ -34,4 +34,8 @@ public class Sorter {
   public <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection) {
     sortingStrategy.sort(a, sortDirection);
   }
+
+  public <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection, int iterationsCount) {
+    sortingStrategy.sort(a, sortDirection, iterationsCount);
+  }
 }
