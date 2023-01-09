@@ -2,6 +2,7 @@ package pl.put.poznan.madness.rest.utils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortDirection;
@@ -92,11 +93,11 @@ public class SortDtoParser {
    * @throws InvalidSortInputException if is supplied with an empty array
    */
   private void setup() throws InvalidSortInputException {
-    if (sortDto.data.size() == 0) {
+    if (sortDto.data.isEmpty()) {
       throw new InvalidSortInputException("Missing data to sort.");
     }
 
-    if (sortDto.algorithms.size() == 0) {
+    if (sortDto.algorithms.isEmpty()) {
       throw new InvalidSortInputException("Sorting algorithms not specified.");
     }
 
@@ -171,11 +172,7 @@ public class SortDtoParser {
     return sortDto.direction;
   }
 
-  public boolean containsIterationsCount() {
-    return sortDto.iterationsCount != null && sortDto.iterationsCount > 0;
-  }
-
-  public int getIterationsCount() {
-    return sortDto.iterationsCount.intValue();
+  public Optional<Integer> getIterationsCount() {
+    return Optional.ofNullable(sortDto.iterationsCount);
   }
 }

@@ -1,5 +1,6 @@
 package pl.put.poznan.madness.logic.sorting;
 
+import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortDirection;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingStrategy;
 
 /**
@@ -30,7 +31,12 @@ public class Sorter {
    * @param a the array to be sorted
    * @param <T> the type of the elements in the array, must implement {@link Comparable}
    */
-  public <T extends Comparable<? super T>> void sort(T[] a) {
-    sortingStrategy.sort(a);
+  public <T extends Comparable<? super T>> void sort(T[] a, SortDirection sortDirection) {
+    sortingStrategy.sort(a, sortDirection);
+  }
+
+  public <T extends Comparable<? super T>> void sort(
+      T[] a, SortDirection sortDirection, int iterationsCount) {
+    sortingStrategy.sort(a, sortDirection, iterationsCount);
   }
 }
