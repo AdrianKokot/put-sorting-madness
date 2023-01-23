@@ -43,6 +43,7 @@ public class SortingMadnessController {
    * }}</pre>
    *
    * @param sortInput a {@link SortDto} object containing the algorithms and data to be sorted
+   * @param errors The Errors object that contains validation errors.
    * @return a {@link SortBenchmarkResult} object representing the results of the benchmark
    * @throws ResponseStatusException if the input is invalid
    */
@@ -62,7 +63,19 @@ public class SortingMadnessController {
         validator.getDirection(),
         validator.getIterationsCount());
   }
-
+  /**
+   * Receives a SortDto object as input, suggests best sorting algorithm for give data and processes
+   * it to return the result of a sort benchmark. Example valid input data:
+   *
+   * <pre>{@code {
+   *   "data": [3, 2, 5, 1, 4]
+   * }}</pre>
+   *
+   * @param sortInput a {@link SortDto} object containing the algorithms and data to be sorted
+   * @param errors The Errors object that contains validation errors.
+   * @return a {@link SortBenchmarkResult} object representing the results of the benchmark
+   * @throws ResponseStatusException when the input data is not valid.
+   */
   @RequestMapping(path = "/suggest", method = RequestMethod.POST, produces = "application/json")
   public Object suggestSort(@RequestBody() SortDto sortInput, Errors errors) {
     SortingAlgorithm sortingAlgorithm = proposer.proposeAlgorithm(sortInput.data);
@@ -81,7 +94,12 @@ public class SortingMadnessController {
         validator.getDirection(),
         validator.getIterationsCount());
   }
-
+  /**
+   * Returns a list of all the available sorting algorithms.
+   *
+   * @return A list of all the available sorting algorithms.
+   * @see pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm
+   */
   @RequestMapping(path = "/algorithms", method = RequestMethod.GET, produces = "application/json")
   public EnumSet<SortingAlgorithm> getAvailableAlgorithms() {
     return EnumSet.allOf(SortingAlgorithm.class);
