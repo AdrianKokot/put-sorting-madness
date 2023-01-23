@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import pl.put.poznan.madness.logic.SortAlgorithmProposerImpl;
 import pl.put.poznan.madness.logic.interfaces.ISortAlgorithmProposer;
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
 import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
@@ -35,7 +34,8 @@ public class SortingMadnessController {
 
   @Resource
   private ISortRunner runner;
-  private final ISortAlgorithmProposer proposer = new SortAlgorithmProposerImpl();
+  @Resource
+  private ISortAlgorithmProposer proposer;
 
   /**
    * Accepts a POST request with a JSON body containing the sorting algorithms and data to be sorted.

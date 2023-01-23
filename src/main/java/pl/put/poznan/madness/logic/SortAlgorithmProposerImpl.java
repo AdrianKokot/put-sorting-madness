@@ -1,10 +1,12 @@
 package pl.put.poznan.madness.logic;
 
+import org.springframework.stereotype.Component;
 import pl.put.poznan.madness.logic.interfaces.ISortAlgorithmProposer;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
 
 import java.util.List;
 
+@Component
 public class SortAlgorithmProposerImpl implements ISortAlgorithmProposer {
 
   @Override
