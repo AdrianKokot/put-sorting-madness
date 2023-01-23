@@ -4,7 +4,6 @@ import java.util.EnumSet;
 import java.util.List;
 
 import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,12 +18,12 @@ import pl.put.poznan.madness.logic.interfaces.ISortAlgorithmProposer;
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
 import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
-import pl.put.poznan.madness.rest.models.ISortableItem;
 import pl.put.poznan.madness.rest.models.SortDto;
 import pl.put.poznan.madness.rest.utils.SortDtoParser;
 
 /**
- * SortingMadnessController is a Spring MVC controller that handles requests related to benchmarking sorting operations.
+ * SortingMadnessController is a Spring MVC controller that handles requests related to benchmarking
+ * sorting operations.
  */
 @RestController
 @RequestMapping("/api")
@@ -38,9 +37,10 @@ public class SortingMadnessController {
   private ISortAlgorithmProposer proposer;
 
   /**
-   * Accepts a POST request with a JSON body containing the sorting algorithms and data to be sorted.
-   * Validates the input and runs a benchmark on the provided algorithms using the given data.
-   * Example valid input data:
+   * Accepts a POST request with a JSON body containing the sorting algorithms and data to be
+   * sorted. Validates the input and runs a benchmark on the provided algorithms using the given
+   * data. Example valid input data:
+   *
    * <pre>{@code {
    *   "algorithms": ["BUBBLE_SORT", "QUICK_SORT"],
    *   "data": [3, 2, 5, 1, 4]
@@ -78,6 +78,11 @@ public class SortingMadnessController {
 
     return runner.runBenchmark(validator.getAlgorithms(),
       validator.getParsedData().toArray(ISortableItem[]::new));
+    return runner.runBenchmark(
+        validator.getAlgorithms(),
+        validator.getParsedData(),
+        validator.getDirection(),
+        validator.getIterationsCount());
   }
 
   @RequestMapping(path = "/algorithms", method = RequestMethod.GET, produces = "application/json")
