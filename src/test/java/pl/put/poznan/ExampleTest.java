@@ -7,6 +7,5 @@ import static org.mockito.Mockito.*;
 
 public class ExampleTest {
   @Test
-  public void firstExampleTest() {
-  }
+  public void firstExampleTest() {}
 }
