@@ -60,8 +60,11 @@ public class SortingMadnessController {
 
     logger.info(String.format("[%s] Request at '%s'", RequestMethod.POST, "/api/sort"));
 
-    return runner.runBenchmark(validator.getAlgorithms(),
-        validator.getParsedData().toArray(ISortableItem[]::new));
+    return runner.runBenchmark(
+      validator.getAlgorithms(),
+      validator.getParsedData(),
+      validator.getDirection(),
+      validator.getIterationsCount());
   }
 
   @RequestMapping(path = "/suggest", method = RequestMethod.POST, produces = "application/json")
@@ -76,8 +79,6 @@ public class SortingMadnessController {
 
     logger.info(String.format("[%s] Request at '%s'", RequestMethod.POST, "/api/suggest"));
 
-    return runner.runBenchmark(validator.getAlgorithms(),
-      validator.getParsedData().toArray(ISortableItem[]::new));
     return runner.runBenchmark(
         validator.getAlgorithms(),
         validator.getParsedData(),
