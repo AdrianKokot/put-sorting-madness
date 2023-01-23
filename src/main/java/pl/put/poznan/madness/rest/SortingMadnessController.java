@@ -2,7 +2,6 @@ package pl.put.poznan.madness.rest;
 
 import java.util.EnumSet;
 import java.util.List;
-
 import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-
 import pl.put.poznan.madness.logic.interfaces.ISortAlgorithmProposer;
 import pl.put.poznan.madness.logic.interfaces.ISortRunner;
 import pl.put.poznan.madness.logic.models.SortBenchmarkResult;
@@ -31,10 +29,8 @@ public class SortingMadnessController {
 
   private static final Logger logger = LoggerFactory.getLogger(SortingMadnessController.class);
 
-  @Resource
-  private ISortRunner runner;
-  @Resource
-  private ISortAlgorithmProposer proposer;
+  @Resource private ISortRunner runner;
+  @Resource private ISortAlgorithmProposer proposer;
 
   /**
    * Accepts a POST request with a JSON body containing the sorting algorithms and data to be
@@ -61,10 +57,10 @@ public class SortingMadnessController {
     logger.info(String.format("[%s] Request at '%s'", RequestMethod.POST, "/api/sort"));
 
     return runner.runBenchmark(
-      validator.getAlgorithms(),
-      validator.getParsedData(),
-      validator.getDirection(),
-      validator.getIterationsCount());
+        validator.getAlgorithms(),
+        validator.getParsedData(),
+        validator.getDirection(),
+        validator.getIterationsCount());
   }
 
   @RequestMapping(path = "/suggest", method = RequestMethod.POST, produces = "application/json")

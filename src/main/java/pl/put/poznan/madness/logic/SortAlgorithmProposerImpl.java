@@ -1,10 +1,9 @@
 package pl.put.poznan.madness.logic;
 
+import java.util.List;
 import org.springframework.stereotype.Component;
 import pl.put.poznan.madness.logic.interfaces.ISortAlgorithmProposer;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
-
-import java.util.List;
 
 @Component
 public class SortAlgorithmProposerImpl implements ISortAlgorithmProposer {
@@ -15,8 +14,7 @@ public class SortAlgorithmProposerImpl implements ISortAlgorithmProposer {
 
     if (size <= 10) {
       return SortingAlgorithm.INSERTION_SORT;
-    }
-    else {
+    } else {
       return SortingAlgorithm.QUICK_SORT;
     }
   }
