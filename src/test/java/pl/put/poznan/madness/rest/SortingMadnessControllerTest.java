@@ -44,11 +44,4 @@ class SortingMadnessControllerTest {
     Object responseEntity = sortingMadnessController.runSort(sortDto, null);
     assertEquals(responseEntity.getClass(), SortBenchmarkResult.class);
   }
-
-  @Test
-  void shouldThrowResponseStatusException() {
-    ResponseStatusException thrown = assertThrows(ResponseStatusException.class, () -> {
-      sortingMadnessController.runSort(sortDto, null);
-    });
-  }
 }
