@@ -47,7 +47,7 @@ public class SortingMadnessController {
    */
   @RequestMapping(path = "/sort", method = RequestMethod.POST, produces = "application/json")
   public Object runSort(@RequestBody() SortDto sortInput) {
-    SortDtoParser validator = SortDtoParser.parse(sortInput);
+    SortDtoParser validator = parse(sortInput);
 
     if (!validator.isValid()) {
       throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, validator.getMessage());
@@ -77,7 +77,7 @@ public class SortingMadnessController {
   public Object suggestSort(@RequestBody() SortDto sortInput) {
     SortingAlgorithm sortingAlgorithm = proposer.proposeAlgorithm(sortInput.data);
     sortInput.algorithms = List.of(sortingAlgorithm);
-    SortDtoParser validator = SortDtoParser.parse(sortInput);
+    SortDtoParser validator = parse(sortInput);
 
     if (!validator.isValid()) {
       throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, validator.getMessage());
@@ -100,5 +100,9 @@ public class SortingMadnessController {
   @RequestMapping(path = "/algorithms", method = RequestMethod.GET, produces = "application/json")
   public EnumSet<SortingAlgorithm> getAvailableAlgorithms() {
     return EnumSet.allOf(SortingAlgorithm.class);
+  }
+
+  protected SortDtoParser parse(SortDto dto) {
+    return SortDtoParser.parse(dto);
   }
 }
