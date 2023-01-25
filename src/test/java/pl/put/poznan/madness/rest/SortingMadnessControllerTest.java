@@ -1,5 +1,11 @@
 package pl.put.poznan.madness.rest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,35 +19,36 @@ import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortDirection;
 import pl.put.poznan.madness.logic.sorting.strategies.boundary.SortingAlgorithm;
 import pl.put.poznan.madness.rest.models.SortDto;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 class SortingMadnessControllerTest {
 
-  @InjectMocks
-  private SortingMadnessController sortingMadnessController;
+  @InjectMocks private SortingMadnessController sortingMadnessController;
 
-  @Mock
-  private SortRunnerImpl runner;
+  @Mock private SortRunnerImpl runner;
 
-  @Mock
-  private SortDto sortDto;
+  @Mock private SortDto sortDto;
 
   @Test
   void testRunSort() {
     sortDto.data = List.of(1, 2);
     sortDto.algorithms = List.of(SortingAlgorithm.BUBBLE_SORT);
 
-    List<SortPerformance> performances = List.of(new SortPerformance(SortingAlgorithm.BUBBLE_SORT, 10.0));
+    List<SortPerformance> performances =
+        List.of(new SortPerformance(SortingAlgorithm.BUBBLE_SORT, 10.0));
     when(runner.runBenchmark(any(), any(), any(), any()))
-      .thenReturn(new SortBenchmarkResult(sortDto.data, performances, SortDirection.ASC));
+        .thenReturn(new SortBenchmarkResult(sortDto.data, performances, SortDirection.ASC));
 
     Object responseEntity = sortingMadnessController.runSort(sortDto, null);
     assertEquals(responseEntity.getClass(), SortBenchmarkResult.class);
+  }
+
+  @Test
+  void shouldThrowResponseStatusException() {
+    ResponseStatusException thrown =
+        assertThrows(
+            ResponseStatusException.class,
+            () -> {
+              sortingMadnessController.runSort(sortDto, null);
+            });
   }
 }
