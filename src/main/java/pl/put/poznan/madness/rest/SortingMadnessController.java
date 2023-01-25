@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,12 +42,11 @@ public class SortingMadnessController {
    * }}</pre>
    *
    * @param sortInput a {@link SortDto} object containing the algorithms and data to be sorted
-   * @param errors The Errors object that contains validation errors.
    * @return a {@link SortBenchmarkResult} object representing the results of the benchmark
    * @throws ResponseStatusException if the input is invalid
    */
   @RequestMapping(path = "/sort", method = RequestMethod.POST, produces = "application/json")
-  public Object runSort(@RequestBody() SortDto sortInput, Errors errors) {
+  public Object runSort(@RequestBody() SortDto sortInput) {
     SortDtoParser validator = SortDtoParser.parse(sortInput);
 
     if (!validator.isValid()) {
@@ -72,12 +70,11 @@ public class SortingMadnessController {
    * }}</pre>
    *
    * @param sortInput a {@link SortDto} object containing the algorithms and data to be sorted
-   * @param errors The Errors object that contains validation errors.
    * @return a {@link SortBenchmarkResult} object representing the results of the benchmark
    * @throws ResponseStatusException when the input data is not valid.
    */
   @RequestMapping(path = "/suggest", method = RequestMethod.POST, produces = "application/json")
-  public Object suggestSort(@RequestBody() SortDto sortInput, Errors errors) {
+  public Object suggestSort(@RequestBody() SortDto sortInput) {
     SortingAlgorithm sortingAlgorithm = proposer.proposeAlgorithm(sortInput.data);
     sortInput.algorithms = List.of(sortingAlgorithm);
     SortDtoParser validator = SortDtoParser.parse(sortInput);

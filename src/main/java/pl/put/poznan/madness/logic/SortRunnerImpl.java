@@ -115,7 +115,6 @@ public class SortRunnerImpl implements ISortRunner {
     Sorter sorter;
 
     if (sortingAlgorithm == SortingAlgorithm.AUTOMATIC) {
-      // TODO #37 - add detecting best algorithm
       sorter = getProperSortingStrategy(SortingAlgorithm.MERGE_SORT);
       performance = new AutomaticSortPerformance(SortingAlgorithm.MERGE_SORT, 0);
     } else {
